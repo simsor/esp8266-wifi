@@ -1,0 +1,135 @@
+<html>
+    <head>
+        <title>ESP8266 Configuration</title>
+
+        <link rel="stylesheet" href="/i/bootstrap.min.css">
+        <script src="/i/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Choose what to do</h1>
+
+            <div class="alert alert-success" id="alert">
+                <p id="alertText"></p>
+            </div>
+
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Fake captive portal <button class="service-runner pull-right btn btn-success btn-xs" data-service="portal">Run</button></h3>
+                </div>
+                <div class="panel-body">
+                    <p>Current portal: <span class="badge" id="currentPortal"></span></p>
+                    <form class="form-inline" action="/set/portal" method="POST">
+                        <fieldset>
+                            <legend>Select portal</legend>
+                            <div class="form-group">
+                                <select name="portal" id="portals" class="form-control">
+                                </select>
+                            </div>
+                            <input type="submit" value="Change" class="btn btn-info">
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Beacon spam <button class="service-runner pull-right btn btn-success btn-xs" data-service="beaconspam">Run</button></h3>
+                </div>
+                <div class="panel-body">
+                    <p>Current type: <span class="badge" id="beaconSpamType"></span></p>
+                    <p><pre id="beaconSpamParam"></pre></p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form class="form-vertical" method="POST" action="/set/beaconspam/spam">
+                                <fieldset>
+                                    <legend>Spam a SSID</legend>
+                                    <div class="form-group">
+                                        <input type="text" name="ssid" placeholder="SSID" class="form-control">
+                                    </div>
+                                    <input type="submit" value="Change" class="btn btn-info">
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <form class="form-vertical" method="POST" action="/set/beaconspam/list">
+                                <fieldset>
+                                    <legend>Write a story</legend>
+                                    <div class="form-group">
+                                        <textarea name="list" placeholder="One SSID per line" class="form-control"></textarea>
+                                    </div>
+                                    <input type="submit" value="Change" class="btn btn-info">
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        function sendAlert(msg) {
+            $("#alert").hide();
+            $("#alertText").text(msg);
+            $("#alert").slideDown();
+        }
+
+        function setNextService(srv) {
+            $.post({
+                url: "/set/service",
+                data: {
+                    service: srv
+                },
+                success: function(result) {
+                    sendAlert("The next service will be \"" + srv + "\"! Please restart the ESP now.");
+                    $(".service-runner").removeAttr("disabled");
+                }
+            });
+        }
+
+        function replaceAll(str, find, replace) {
+            return str.replace(new RegExp(find, 'g'), replace);
+        }
+
+        $(function() {
+            $("#alert").hide();
+
+            var hashValue = window.location.hash.substr(1);
+            if (hashValue) {
+                sendAlert(decodeURIComponent(hashValue));
+            }
+            
+            $.get({
+                url: "/state",
+                dataType: "json",
+                success: function(result) {
+                    var portals = JSON.parse(result["portals"]);
+                    for (var i=0; i < portals.length; i++) {
+                        var op = $("<option></option>").attr("value", portals[i].folder).text(portals[i].ssid);
+                        $("#portals").append(op);
+                    }
+
+                    if (result["portal"]) {
+                        $("#currentPortal").text(result["portal"]);
+                    } else {
+                        $("#currentPortal").text("N/A");
+                    }
+                    
+                    var beacon = result["beacon"];
+                    var parts = beacon.split(";");
+                    var type = beacon[0].trim();
+
+                    $("#beaconSpamType").text(type);
+                    $("#beaconSpamParam").text(replaceAll(beacon.slice(1).join(";"), ';', '\n'));
+                }
+            });
+
+            $(".service-runner").click(function() {
+                var service = $(this).attr("data-service");
+                $(".service-runner").attr("disabled", "");
+                setNextService(service);
+            });
+        });
+    </script>
+</html>

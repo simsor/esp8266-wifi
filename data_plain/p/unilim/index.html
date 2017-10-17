@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" charset="UTF-8">
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+    <title>UNILIM-ETUD-PERS</title>
+
+    <link href="https://cr-wifi.unilim.fr/upload/custom/Etud-Pers-CP-profile/favicon.png" rel="shortcut icon" type="image/x-icon">
+
+    <link type="text/css" rel="stylesheet" href="f/styles.css">
+    <!--[if IE 7]>
+    <link type="text/css" rel="stylesheet" href="./ie7.min.css" />
+    <![endif]-->
+
+    <!-- JS -->
+    <!-- <script type="text/javascript" src="f/scripts.js"></script> -->
+    <!--[if lt IE 9]>
+      <script src="./ie9.min.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <script language="javascript" type="text/javascript">
+        function showPolicy() {
+            win = window.open("/upload/custom/Etud-Pers-CP-profile/acceptableusepolicy.html", "policy", "height=550,width=550,scrollbars=1");
+        }
+    </script>
+</head>
+
+<body id="cas" class="bg-grad-right-gray-lighter">
+
+    <div id="wrap">
+        <header id="header">
+        </header>
+
+
+        <div id="logincontent" class="container">
+
+            <div class="row">
+                <div class="col-md-7 text-center">
+
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading text-primary ul-bold">
+                            <h3><i class="fa fa-wifi fa-fw"></i> UNILIM-ETUD-PERS</h3>
+                            <p>Ce service est soumis à la <b><a href="javascript:void(0)" onclick="showPolicy();">Charte d'utilisation du réseau WIFI</a></b></p>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="unilim-logo">
+                                <img src="f/logo-unilim.png" alt="Logo Unilim" height="80px">
+                            </div>
+
+                            <div class="form" autocomplete="on">
+                                <form action="/connect" id="regform" method="post" autocomplete="off" title="Se connecter au réseau WiFi"> <br>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i> </span>
+                                        <input id="user" name="username" class="text form-control" placeholder="Identifiant" accesskey="u" required="" autocomplete="on" autofocus="" type="text">
+                                    </div>
+
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock"></i> </span>
+                                        <input id="password" name="password" class="text form-control" placeholder="Mot de passe" required="" autocomplete="off" accesskey="p" type="password">
+                                    </div>
+
+                                    <div id="fqdnbox" style="display: none;"></div>
+
+
+                                    <input name="cmd" value="authenticate" type="hidden">
+                                    <button name="Login" value="Connexion" type="submit" class="btn btn-default">
+                                        <span class="fa fa-wifi fa-fw"></span>
+                                        Se connecter
+                                    </button>
+
+                                </form>
+
+                            </div>
+                            <br>
+
+
+                            <a href="#">
+                              Problème d'identifiant ou de mot de passe
+                            </a>
+                            <span cvlass="ul-bolder"> — </span>
+                            <a href="#">
+                              Activer mon compte
+                            </a>
+
+                        </div>
+
+                        <!--<div class="panel-footer text-primary ul-bold">
+                          <br/>
+                          <div class="col-md-4">
+                            <img  src="./popup-logout.png" alt="Pop-up de déconnexion">
+
+                          </div>
+                          <div class="col-md-8">
+                            <h4><b>Pour votre sécurité</b>, n'oubliez pas vous déconnecter à la fin de votre session.</h4>
+                            <p>Pour voir le pop-up de déconnexion, pensez à désactiver votre anti-pop-up.</p>
+                          </div>
+                          &nbsp;
+                        </div>
+                        <br/>
+                      -->
+                    </div>
+
+                </div>
+
+                <div class="col-md-5 text-center">
+                    <div class="well">
+                        <h3>Pour plus de simplicité choisissez le réseau WIFI <b>"eduroam"</b></h3>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <img class="img-responsive" src="f/eduroam_trans.png">
+                            </div>
+                            <div class="col-md-7">
+                                <ul class="list-unstyled text-left">
+                                    <li><i class="fa fa-plus"></i> Saisie unique des identifiants</li>
+                                    <li><i class="fa fa-plus"></i> Stabilité</li>
+                                    <li><i class="fa fa-plus"></i> Sécurité</li>
+                                    <li><i class="fa fa-plus"></i> Mobilité</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h4>+ d'infos :  <a href="#">http://www.unilim.fr/dsi/Eduroam</a></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- END #content -->
+
+    
+    <!-- END #container -->
+
+    <div id="footer">
+        <!-- Custom HTML footer -->
+        <div class="container">
+            <div class="footer-left col-sm-6 text-muted">
+                <div class="ul-element-logo-signal" style="display: inline-block; position: relative; width:60px; padding-bottom: 3%;vertical-align: top;">
+                    <img src="f/signal.png" alt="Signal" height="7px">
+                </div>
+                <span class="text-gray">Direction du Système d'Information</span>
+            </div>
+
+            <div class="footer-right col-sm-6 text-muted">
+                &nbsp;<a href="#">Besoin d'assistance ?</a>
+            </div>
+        </div>
+    </div>
+    <!-- END #footer -->
+
+
+
+</body></html>
